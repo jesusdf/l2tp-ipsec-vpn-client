@@ -1,9 +1,10 @@
 #!/bin/sh
 
 # template out all the config files using env vars
-sed -i 's/right=.*/right='$VPN_SERVER_IPV4'/' /etc/ipsec.conf
+sed -i 's/right=.*/right='$VPN_PUBLIC_IP'/' /etc/ipsec.conf
+sed -i 's/rightid=.*/rightid='$VPN_PRIVATE_IP'/' /etc/ipsec.conf
 echo ': PSK "'$VPN_PSK'"' > /etc/ipsec.secrets
-sed -i 's/lns = .*/lns = '$VPN_SERVER_IPV4'/' /etc/xl2tpd/xl2tpd.conf
+sed -i 's/lns = .*/lns = '$VPN_PUBLIC_IP'/' /etc/xl2tpd/xl2tpd.conf
 sed -i 's/name .*/name '$VPN_USERNAME'/' /etc/ppp/options.l2tpd.client
 sed -i 's/password .*/password '$VPN_PASSWORD'/' /etc/ppp/options.l2tpd.client
 
@@ -14,9 +15,9 @@ ipsec pluto --stderrlog --config /etc/ipsec.conf
 sleep 5
 #ipsec setup start
 #sleep 1
-#ipsec auto --add L2TP-PSK
+#ipsec auto --add myVPN
 #sleep 1
-ipsec auto --up L2TP-PSK
+ipsec auto --up myVPN
 sleep 3
 ipsec --status
 sleep 3

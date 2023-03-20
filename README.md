@@ -1,8 +1,10 @@
 l2tp-ipsec-vpn-client
 ===
-[![](https://images.microbadger.com/badges/image/ubergarm/l2tp-ipsec-vpn-client.svg)](https://microbadger.com/images/ubergarm/l2tp-ipsec-vpn-client) [![](https://images.microbadger.com/badges/version/ubergarm/l2tp-ipsec-vpn-client.svg)](https://microbadger.com/images/ubergarm/l2tp-ipsec-vpn-client) [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ubergarm/l2tp-ipsec-vpn-client/blob/master/LICENSE)
+[![](https://images.microbadger.com/badges/image/jesusdf/l2tp-ipsec-vpn-client.svg)](https://microbadger.com/images/jesusdf/l2tp-ipsec-vpn-client) [![](https://images.microbadger.com/badges/version/jesusdf/l2tp-ipsec-vpn-client.svg)](https://microbadger.com/images/jesusdf/l2tp-ipsec-vpn-client) [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/jesusdf/l2tp-ipsec-vpn-client/blob/master/LICENSE)
 
 A tiny Alpine based docker image to quickly setup an L2TP over IPsec VPN client w/ PSK.
+
+Forked from https://github.com/ubergarm/l2tp-ipsec-vpn-client to meet custom needs.
 
 ## Motivation
 Does your office or a client have a VPN server already setup and you
@@ -10,7 +12,7 @@ just need to connect to it? Do you use Linux and are jealous that the
 one thing a MAC can do better is quickly setup this kind of VPN? Then
 here is all you need:
 
-1. VPN Server Address
+1. VPN Server Address (public and private if behind NAT)
 2. Pre Shared Key
 3. Username
 4. Password
@@ -18,7 +20,8 @@ here is all you need:
 ## Run
 Setup environment variables for your credentials and config:
 
-    export VPN_SERVER_IPV4='1.2.3.4'
+    export VPN_PUBLIC_IP='1.2.3.4'
+    export VPN_PRIVATE_IP='192.168.2.34'
     export VPN_PSK='my pre shared key'
     export VPN_USERNAME='myuser@myhost.com'
     export VPN_PASSWORD='mypass'
@@ -27,11 +30,12 @@ Now run it (you can daemonize of course after debugging):
 
     docker run --rm -it --privileged --net=host \
                -v /lib/modules:/lib/modules:ro \
-               -e VPN_SERVER_IPV4 \
+               -e VPN_PUBLIC_IP \
+               -e VPN_PRIVATE_IP \
                -e VPN_PSK \
                -e VPN_USERNAME \
                -e VPN_PASSWORD \
-                  ubergarm/l2tp-ipsec-vpn-client
+                  jesusdf/l2tp-ipsec-vpn-client
 
 ## Route
 From the host machine configure traffic to route through VPN link:
@@ -65,7 +69,7 @@ pluto[17]: seccomp security for crypto helper not supported
 ## Strongswan
 The previous `strongswan` based version of this docker image is still available on docker hub here:
 ```bash
-docker pull ubergarm/l2tp-ipsec-vpn-client:strongswan
+docker pull jesusdf/l2tp-ipsec-vpn-client:strongswan
 ```
 
 ## TODO
