@@ -37,6 +37,32 @@ Now run it (you can daemonize of course after debugging):
                -e VPN_PASSWORD \
                   jesusdf/l2tp-ipsec-vpn-client
 
+Example docker compose file:
+
+version: '2'
+services:
+  l2tp-ipsec-vpn-client:
+    image: jesusdf/l2tp-ipsec-vpn-client
+    container_name: l2tp-ipsec-vpn-client
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/ppp
+    environment:
+      - VPN_PUBLIC_IP=123.123.123.123
+      - VPN_PRIVATE_IP=172.16.123.123
+      - VPN_PSK=my-preshared-key
+      - VPN_USERNAME=my-domain\\\\my-username
+      - VPN_PASSWORD=my-password
+    #logging:
+    #  driver: none
+    healthcheck:
+      test: ["CMD", "/sbin/ifconfig", "ppp0"]
+      interval: 30s
+      timeout: 5s
+      retries: 2
+    restart: unless-stopped
+
 ## Route
 From the host machine configure traffic to route through VPN link:
 
@@ -66,11 +92,7 @@ pluto[17]: No XFRM/NETKEY kernel interface detected
 pluto[17]: seccomp security for crypto helper not supported
 ```
 
-## Strongswan
-The previous `strongswan` based version of this docker image is still available on docker hub here:
-```bash
-docker pull jesusdf/l2tp-ipsec-vpn-client:strongswan
-```
+Also, it is advised to load the module pppoe on the host using `sudo modprobe pppoe`, so the docker container works with only NET_ADMIN capability.
 
 ## TODO
 - [x] `ipsec` connection works

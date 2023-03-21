@@ -11,9 +11,7 @@ RUN set -x && \
               libreswan \
               xl2tpd \
               ppp \
-    && mkdir -p /var/run/pluto \
-    && mkdir -p /var/run/xl2tpd \
-    && touch /var/run/xl2tpd/l2tp-control
+              bash
 
 COPY ipsec.conf /etc/ipsec.conf
 COPY ipsec.secrets /etc/ipsec.secrets
