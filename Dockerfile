@@ -1,4 +1,7 @@
-FROM alpine:3.17.2
+# To support modp1024 VPNs, use alpine 3.8
+FROM alpine:3.8
+# If a better dhgroup can be used, go to the last LTS version
+#FROM alpine:3.17.2
 
 ENV LANG C.UTF-8
 
