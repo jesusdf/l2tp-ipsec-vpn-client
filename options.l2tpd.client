@@ -15,7 +15,6 @@ mtu 1400
 mru 1400
 defaultroute
 usepeerdns
-debug
 connect-delay 5000
 name myuser@myhost.com
 password myuserpassword
