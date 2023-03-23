@@ -14,7 +14,8 @@ RUN set -x && \
               bash \
     && rm -f  /sbin/apk \
               /usr/bin/wget \
-              /usr/sbin/sendmail
+              /usr/sbin/sendmail \
+              /usr/bin/nc
 
 COPY ipsec.conf /etc/ipsec.conf
 COPY ipsec.secrets /etc/ipsec.secrets
