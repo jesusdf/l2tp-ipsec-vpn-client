@@ -11,7 +11,10 @@ RUN set -x && \
               libreswan \
               xl2tpd \
               ppp \
-              bash
+              bash \
+    && rm -f  /sbin/apk \
+              /usr/bin/wget \
+              /usr/sbin/sendmail
 
 COPY ipsec.conf /etc/ipsec.conf
 COPY ipsec.secrets /etc/ipsec.secrets
