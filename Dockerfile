@@ -12,6 +12,7 @@ RUN set -x && \
               xl2tpd \
               ppp \
               bash \
+              tzdata \
     && rm -f  /sbin/apk \
               /usr/bin/wget \
               /usr/sbin/sendmail \

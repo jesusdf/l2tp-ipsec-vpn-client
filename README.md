@@ -30,6 +30,7 @@ Now run it (you can daemonize of course after debugging):
 
     docker run --rm -it --privileged --net=host \
                -v /lib/modules:/lib/modules:ro \
+               -e TZ \
                -e VPN_PUBLIC_IP \
                -e VPN_PRIVATE_IP \
                -e VPN_PSK \
@@ -49,6 +50,7 @@ services:
     devices:
       - /dev/ppp
     environment:
+      - TZ=Europe/Madrid
       - VPN_PUBLIC_IP=123.123.123.123
       - VPN_PRIVATE_IP=172.16.123.123
       - VPN_PSK=my-preshared-key
