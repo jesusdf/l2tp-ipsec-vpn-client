@@ -8,6 +8,9 @@ sed -i 's/lns = .*/lns = '$VPN_PUBLIC_IP'/' /etc/xl2tpd/xl2tpd.conf
 sed -i 's/name .*/name '$VPN_USERNAME'/' /etc/ppp/options.l2tpd.client
 sed -i 's/password .*/password '$VPN_PASSWORD'/' /etc/ppp/options.l2tpd.client
 
+cp /usr/share/zoneinfo/${TZ} /etc/localtime
+echo "${TZ}" >  /etc/timezone
+
 # Initial cleanup
 if [ -d /var/run/pluto ]; then
     rm -rf /var/run/pluto
